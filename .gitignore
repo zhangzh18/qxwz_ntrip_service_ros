@@ -1,1 +1,5 @@
 .vscode/
+./QXWZ_ROS_WS/build/
+./QXWZ_ROS_WS/.vscode/
+./QXWZ_ROS_WS/devel/
+./QXWZ_ROS_WS/.catkin_workspace
