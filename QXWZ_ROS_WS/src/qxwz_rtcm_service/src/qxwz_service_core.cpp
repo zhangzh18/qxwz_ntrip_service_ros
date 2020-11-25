@@ -34,14 +34,13 @@ void RtcmServiceInit(std::string appkey, std::string appSecret){
     ROS_INFO("qxwz service started");
 
 }      
-
+// this function shows how to update ggaMsg to QXWZ service
 void UpdateGGA(void) {
     qxwz_rtcm_sendGGAWithGGAString(const_cast<char*>("$GPGGA,073247.50,3959.7448,N,11619.4266,E,1,10,4.1,80.65,M,-9.80,M,,*4E\r\n")); 
     ROS_INFO("send GGAMSG success");
 }
 
-void GpggaHandler(const std_msgs::StringConstPtr ggaMsg) {
-    
+void GpggaHandler(const std_msgs::StringConstPtr ggaMsg) { 
     qxwz_rtcm_sendGGAWithGGAString(const_cast<char*>(ggaMsg->data.c_str())); 
     ROS_INFO("send GGAMSG success");
 }
@@ -53,26 +52,33 @@ int main(int argc, char *argv[])
 
     std::string appkey;
     std::string appSecret;
+    std::string deviceId;
+    std::string deviceType;
+
     std::string ggaTopic;
     std::string rtcmTopic;
+    
+    nh.param<std::string>("ggaTopic",  ggaTopic,  std::string("your gpgga_topic"));
+    nh.param<std::string>("rtcmTopic",  rtcmTopic,  std::string("your qxwz_rtcm_topic"));
 
-    nh.param<std::string>("appkey",  appkey,  std::string("--"));
-    nh.param<std::string>("appSecret",  appSecret,  std::string("--"));
-    nh.param<std::string>("ggaTopic",  ggaTopic,  std::string("/gpgga_topic"));
-    nh.param<std::string>("rtcmTopic",  rtcmTopic,  std::string("/qxwz_rtcm_topic"));
+    nh.param<std::string>("appkey",  appkey,  std::string("your appkey"));
+    nh.param<std::string>("appSecret",  appSecret,  std::string("your appSecret"));
+    nh.param<std::string>("deviceId",  deviceId,  std::string("your deviceId"));
+    nh.param<std::string>("deviceType",  deviceType,  std::string("your deviceType"));
 
+    
     ROS_INFO("Starting with appkey:%s, appSecret:%s", appkey.c_str(), appSecret.c_str());
+    ROS_INFO("Starting with deviceId:%s, deviceType:%s", deviceId.c_str(), deviceType.c_str());
     ROS_INFO("Subscribing GPGGA message from:%s", ggaTopic.c_str());
-    ROS_INFO("Transfer rtcm message with:%s", rtcmTopic.c_str());
+    ROS_INFO("Transfer rtcm message through:%s", rtcmTopic.c_str());
 
     rtcmMsgPub = nh.advertise<std_msgs::String>(rtcmTopic, 10);
     ggaSub = nh.subscribe<std_msgs::String>(ggaTopic, 10, &GpggaHandler);
     
     RtcmServiceInit(appkey, appSecret);
 
-    ros::Rate loop_rate(1);
+    ros::Rate loop_rate(100);
     while(ros::ok()){
-        UpdateGGA();
         ros::spinOnce();
         loop_rate.sleep();
     }
