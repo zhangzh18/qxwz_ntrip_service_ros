@@ -1,8 +1,0 @@
-prefix=/home/zzh/ROS/X.OTHERS/QXWZ_ROS_WS/install
-
-Name: qxwz_rtcm_service
-Description: Description of qxwz_rtcm_service
-Version: 0.0.0
-Cflags: -I${prefix}/include
-Libs: -L${prefix}/lib 
-Requires: 

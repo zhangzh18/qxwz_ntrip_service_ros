@@ -1,2 +1,0 @@
-qxwz_rtcm_service
--DCATKIN_DEVEL_PREFIX=/home/zzh/ROS/X.OTHERS/QXWZ_ROS_WS/devel -DCMAKE_INSTALL_PREFIX=/home/zzh/ROS/X.OTHERS/QXWZ_ROS_WS/install -G Unix Makefiles
