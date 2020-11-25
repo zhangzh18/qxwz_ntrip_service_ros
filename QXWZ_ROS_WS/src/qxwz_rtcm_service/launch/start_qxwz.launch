@@ -1,8 +1,10 @@
 <launch>
   <node name="qxwz_rtcm_service" pkg="qxwz_rtcm_service" type="qxwz_service_core" output = "screen">
     <rosparam>
-        appkey: A48k1kec4iuh
-        appSecret: 80e48b74315122f1 
+        appkey: A4821kee4iuh
+        appSecret: 80e4cb74317122f1 
+        deviceId: your deviceId
+        deviceType: your deviceType
         ggaTopic: /ggaName
         rtcmTopic: /qxwz_rtcm_msg        
     </rosparam>
